@@ -1,0 +1,33 @@
+{
+  "name": "couture",
+  "version": "1.0.0",
+  "description": "A fashion reccomendation application",
+  "main": "index.js",
+  "scripts": {
+    "test": " electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maybulb/couture.git"
+  },
+  "keywords": [
+    "couture",
+    "fashion"
+  ],
+  "author": "Maybulb",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maybulb/couture/issues"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Maybulb",
+  "license": "MIT",
+  "dependencies": {
+    "express": "~4.0.0",
+    "morgan": "~1.0.0",
+    "mongoose": "~3.6.13",
+    "body-parser": "~1.0.1"
+  }
+}
