@@ -1,14 +1,14 @@
 {
    "hipster": {
-      "top": ["Button Up Shirt", "Blazer", "Cardigan"],
+      "top": ["Button Up Shirt", "Blazer Jacket", "Cardigan"],
       "bottom": ["Brown Jeans", "Blue Jeans", "Black Jeans"]
     },
    "athleisure": {
       "top": ["Hoodie", "T Shirt", "Dri Fit Shirt"],
-      "bottom": ["Jogger", "Basketball Shorts", "Yoga Pants"]
+      "bottom": ["Jogger Pants", "Basketball Shorts", "Sweatpants"]
     },
    "regular": {
-      "top": ["Long Sleeve Shirt", "Zip Up", "Graphic Tee"],
-      "bottom": ["Denim Jeans", "Chinos", "Slacks"]
+      "top": ["Long Sleeve Shirt", "Zip Up Sweatshirt", "Graphic T Shirt"],
+      "bottom": ["Denim Jeans", "chino pants", "casual slacks"]
     }
 }
