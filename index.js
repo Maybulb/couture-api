@@ -43,10 +43,16 @@ router.get('/', function(req, res) {
 
 router.route('/:gender/:style').get(function(req, res) {
 	var gender = (function () {
-		if (req.params.gender === "other") {
-			return ""
-		} else {
-			return req.params.gender
+		switch (req.params.gender) {
+			case "male":
+				return "men's"
+				break;
+			case "female":
+				return "women's"
+				break;
+			case "other":
+				return ""
+				break;
 		}
 	})();
 
@@ -54,8 +60,8 @@ router.route('/:gender/:style').get(function(req, res) {
 		if (req.query["p"] != undefined) {
 			var max = Number.parseInt(req.query['p']);
 			return {
-				"top": " under $" + max * .4,
-				"bottom": " under $" + max * .6
+				"top": [max * .2, max * .4],
+				"bottom": [max * .4, max * .6]
 			}
 		} else {
 			return {
@@ -81,6 +87,7 @@ router.route('/:gender/:style').get(function(req, res) {
 
 	// very, very, very dirty hack. fix later
 	var checkIfDone = setInterval(function () {
+		console.log(global.done["top"] && global.done["bottom"])
 		if (global.done["top"] && global.done["bottom"]) {
 			clearInterval(checkIfDone);
 			var punctuation = /[$.]/g
@@ -106,18 +113,22 @@ app.listen(port, function() {
 });
 
 function getItem(article, gender, priceRange, title, index) {
-	keyword = gender + " " + styles[title][article][index] + priceRange[article];
-	
+	keyword = gender + " " + styles[title][article][index];
+	console.log(parseInt(String(Math.floor(priceRange[article][1] + "00"), 10)), parseInt(String(Math.floor(priceRange[article][0] + "00"), 10)))
 	client.itemSearch({
+		Condition: "New",
 		Keywords: keyword,
-		responseGroup: 'ItemAttributes',
-		searchIndex: 'Fashion'
+		ResponseGroup: 'ItemAttributes',
+		SearchIndex: 'Fashion',
+		MaximumPrice: parseInt(String(Math.floor(priceRange[article][1] + "00"), 10)),
+		MinimumPrice: parseInt(String(Math.floor(priceRange[article][0] + "00"), 10)),
+		Sort: "popularity-rank"
 	}).then(function(results) {
-		var base = rand.paul(results);
+		var base = rand.paul(results.slice(0, 50));
 		var scrapeRes = request("GET", base["DetailPageURL"][0])
 		var body = scrapeRes.getBody()
-		
 		var page = cheerio.load(body);
+
 		global.item[article] = {
 			"url": base["DetailPageURL"][0],
 			"brand": base["ItemAttributes"][0]["Brand"][0],
