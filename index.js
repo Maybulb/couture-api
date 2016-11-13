@@ -42,10 +42,10 @@ router.get('/', function(req, res) {
 });
 
 
-router.route('/:gender/:style/search') // &query=boots
+router.route('/:gender/:style/:search') // &query=boots
 	.get(function(req, res) {
 		var gender = req.params.gender
-			, search = req.query.query
+			, search = req.params.search
 			, keyword = gender + ' ' + search
 
 		console.log('search query: ' + keyword);
