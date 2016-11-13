@@ -42,11 +42,14 @@ router.get('/', function(req, res) {
 });
 
 
-router.route('/search/:query')
+router.route('/:gender/:style/search') // &query=boots
 	.get(function(req, res) {
-		var gender = 'male'
-		var search = req.params.query
-		var keyword = gender +' '+ search
+		var gender = req.params.gender
+			, search = req.query.query
+			, keyword = gender + ' ' + search
+
+		console.log('search query: ' + keyword);
+
 		client.itemSearch({
 			Keywords: keyword,
 			responseGroup: 'ItemAttributes'
@@ -54,8 +57,10 @@ router.route('/search/:query')
 			if (err) {
 				res.send(err);
 			} else {
-				res.send(results);  // products (Array of Object)
-				res.send(response); // response (Array where the first element is an Object that contains Request, Item, etc.)
+				res.send({
+					results: results,
+					response: response
+				});
 			}
 		});
 	});

@@ -4,5 +4,5 @@ couture api
 the api for couture!!
 
 ```
-api/style/search?store=amazon&brands=coach
+api/gender/style/search?store=amazon&brands=coach
 ```
