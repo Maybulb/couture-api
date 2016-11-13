@@ -22,6 +22,7 @@
   "dependencies": {
     "amazon-product-api": "^0.4.2",
     "body-parser": "~1.0.1",
+    "cheerio": "^0.22.0",
     "express": "~4.0.0",
     "morgan": "~1.0.0",
     "rand-paul": "^2.0.0",

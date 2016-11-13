@@ -3,6 +3,7 @@ var express = require('express')
 	, bodyParser = require('body-parser')
 	, morgan = require('morgan')
 	, amazon = require('amazon-product-api')
+	, cheerio = require('cheerio')
 	, request = require('request');
 
 // set up amazon client
@@ -13,6 +14,8 @@ var client = amazon.createClient({
 });
 
 var styles = require('./keywords.json');
+
+var rand = require('rand-paul');
 
 // configure app
 app.use(morgan('dev')); // log requests to the console
@@ -40,7 +43,13 @@ router.get('/', function(req, res) {
 
 router.route('/:gender/:style/:article') // article=[top/bottom]
 	.get(function(req, res) {
-		var gender = req.params.gender
+		var gender = (function () {
+			if (req.params.gender === "other") {
+				return ""
+			} else {
+				return req.params.gender
+			}
+		})();
 
 		if(!styles.hasOwnProperty(req.params.style)) {
 			res.redirect('/404')
@@ -64,24 +73,30 @@ router.route('/:gender/:style/:article') // article=[top/bottom]
 			if (err) {
 				res.send(err);
 			} else {
-				const base = results[0];
-				var item = {
-					"url": base["DetailPageURL"][0],
-					"brand": base["ItemAttributes"][0]["Brand"][0],
-					"color": base["ItemAttributes"][0]["Color"][0],
-					"department": base["ItemAttributes"][0]["Department"][0],
-					"note": base["ItemAttributes"][0]["Feature"], // amazon's writeup of the product
-					"cost": {
-						"formatted": base["ItemAttributes"][0]["ListPrice"][0]["FormattedPrice"][0] + " " + base["ItemAttributes"][0]["ListPrice"][0]["CurrencyCode"][0],
-						"raw": {
-							"amount": base["ItemAttributes"][0]["ListPrice"][0]["Amount"][0],
-							"currency": base["ItemAttributes"][0]["ListPrice"][0]["CurrencyCode"][0]
-						}
-					},
-					"group": base["ItemAttributes"][0]["ProductGroup"][0],
-					"title": base["ItemAttributes"][0]["Title"][0]
-				}
-				res.send(item);
+				const base = rand.paul(results);
+				request.get(base["DetailPageURL"][0], function (err, res2, body) {
+					if (err) {
+						res.send(err);
+					}
+					var page = cheerio.load(body);
+					global.item = {
+						"url": base["DetailPageURL"][0],
+						"brand": base["ItemAttributes"][0]["Brand"][0],
+						"color": base["ItemAttributes"][0]["Color"][0],
+						"department": base["ItemAttributes"][0]["Department"][0],
+						"note": base["ItemAttributes"][0]["Feature"], // amazon's writeup of the product
+						"group": base["ItemAttributes"][0]["ProductGroup"][0],
+						"title": base["ItemAttributes"][0]["Title"][0]
+					}
+					global.item["image"] = page('img#landingImage, img.a-dynamic-image').attr("src");
+					try {
+						global.item["cost"] = base["ItemAttributes"][0]["ListPrice"][0]["FormattedPrice"][0] + " " + base["ItemAttributes"][0]["ListPrice"][0]["CurrencyCode"][0];
+					} catch (e) {
+						global.item["cost"] = page('#priceblock_ourprice, #priceblock_saleprice').text();
+					}
+
+					res.send(global.item);
+				});
 			}
 		});
 	});
