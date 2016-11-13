@@ -41,15 +41,25 @@ router.get('/', function(req, res) {
 	res.json({ message: 'api root, baby' });
 });
 
-
-router.route('/:gender/:style/:search') // &query=boots
+router.route('/:gender/:style/:article') // &query=boots
 	.get(function(req, res) {
 		var gender = req.params.gender
-			, search = req.params.search
-			, keyword = gender + ' ' + search
 
-		console.log('search query: ' + keyword);
+		if(!styles.hasOwnProperty(req.params.style)) {
+			res.redirect('/404')
+		}
 
+		if(req.params.article != "top" && req.params.article != "bottom") {
+			res.redirect('/404')
+		}
+
+		var title = req.params.style
+			, min = 0
+			, max = 3
+			, index = Math.floor(Math.random() * (max - min)) + min
+
+		keyword = gender + " " + styles[title][req.params.article][index]
+		
 		client.itemSearch({
 			Keywords: keyword,
 			responseGroup: 'ItemAttributes'
