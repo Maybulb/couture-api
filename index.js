@@ -57,10 +57,7 @@ router.route('/:gender/:style/search') // &query=boots
 			if (err) {
 				res.send(err);
 			} else {
-				res.send({
-					results: results,
-					response: response
-				});
+				res.send(results);
 			}
 		});
 	});
