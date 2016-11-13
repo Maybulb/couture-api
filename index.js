@@ -89,10 +89,13 @@ router.route('/:gender/:style/:article') // article=[top/bottom]
 						"title": base["ItemAttributes"][0]["Title"][0]
 					}
 					global.item["image"] = page('img#landingImage, img.a-dynamic-image').attr("src");
+					global.item["cost"] = new Object();
 					try {
-						global.item["cost"] = base["ItemAttributes"][0]["ListPrice"][0]["FormattedPrice"][0] + " " + base["ItemAttributes"][0]["ListPrice"][0]["CurrencyCode"][0];
+						global.item["cost"].pretty = base["ItemAttributes"][0]["ListPrice"][0]["FormattedPrice"][0];
+						global.item["cost"].raw = Number.parseInt(base["ItemAttributes"][0]["ListPrice"][0]["Amount"][0], 10);
 					} catch (e) {
-						global.item["cost"] = page('#priceblock_ourprice, #priceblock_saleprice').text();
+						global.item["cost"].pretty = page('#priceblock_ourprice, #priceblock_saleprice').text();
+						global.item["cost"].raw = Number.parseInt(global.item["cost"].pretty.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ""), 10);
 					}
 
 					res.send(global.item);
