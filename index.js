@@ -1,8 +1,17 @@
-// call the packages we need
-var express    = require('express');
-var bodyParser = require('body-parser');
-var app        = express();
-var morgan     = require('morgan');
+var express = require('express')
+	, app = express()
+	, bodyParser = require('body-parser')
+	, morgan = require('morgan')
+	, amazon = require('amazon-product-api');
+
+// set up amazon client
+var client = amazon.createClient({
+  awsId: "AKIAIP4XCZQBNGNC2ECQ",
+  awsSecret: "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",
+  awsTag: "benjp51-20"
+});
+
+var keywords = require('./keywords.json');
 
 // configure app
 app.use(morgan('dev')); // log requests to the console
@@ -12,10 +21,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var port     = process.env.PORT || 8080; // set our port
-
-var mongoose   = require('mongoose');
-mongoose.connect('mongodb://node:node@novus.modulusmongo.net:27017/Iganiq8o'); // connect to our database
-var Bear     = require('./app/models/bear');
 
 // api routes
 
@@ -33,49 +38,14 @@ router.use(function(req, res, next) {
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {
-	res.json({ message: 'hooray! welcome to our api!' });
+	res.json({ message: 'api root, baby' });
 });
 
 
-router.route('/bears/:bear_id')
+router.route('/search/:query')
 
-	// get the bear with that id
 	.get(function(req, res) {
-		Bear.findById(req.params.bear_id, function(err, bear) {
-			if (err)
-				res.send(err);
-			res.json(bear);
-		});
-	})
-
-	// update the bear with this id
-	.put(function(req, res) {
-		Bear.findById(req.params.bear_id, function(err, bear) {
-
-			if (err)
-				res.send(err);
-
-			bear.name = req.body.name;
-			bear.save(function(err) {
-				if (err)
-					res.send(err);
-
-				res.json({ message: 'Bear updated!' });
-			});
-
-		});
-	})
-
-	// delete the bear with this id
-	.delete(function(req, res) {
-		Bear.remove({
-			_id: req.params.bear_id
-		}, function(err, bear) {
-			if (err)
-				res.send(err);
-
-			res.json({ message: 'Successfully deleted' });
-		});
+		res.send(req.params.query);
 	});
 
 // register routes
