@@ -8,9 +8,9 @@ var express = require('express')
 
 // set up amazon client
 var client = amazon.createClient({
-  awsId: "AKIAIP4XCZQBNGNC2ECQ",
-  awsSecret: "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",
-  awsTag: "benjp51-20"
+  awsId: process.env.ID,
+  awsSecret: process.env.SECRET,
+  awsTag: process.env.TAG
 });
 
 var styles = require('./keywords.json');
