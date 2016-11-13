@@ -2,7 +2,8 @@ var express = require('express')
 	, app = express()
 	, bodyParser = require('body-parser')
 	, morgan = require('morgan')
-	, amazon = require('amazon-product-api');
+	, amazon = require('amazon-product-api')
+	, request = require('request');
 
 // set up amazon client
 var client = amazon.createClient({
@@ -29,19 +30,15 @@ var port = process.env.PORT || 8080;
 var router = express.Router();
 
 // middleware to use for all requests
-router.use(function(req, res, next) {
-	console.log('Something is happening.');
-	next();
-});
+router.use(function(req, res, next) { next(); });
 
 
-
-// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
+// test route!! localhost:8080/api)
 router.get('/', function(req, res) {
 	res.json({ message: 'api root, baby' });
 });
 
-router.route('/:gender/:style/:article') // &query=boots
+router.route('/:gender/:style/:article') // article=[top/bottom]
 	.get(function(req, res) {
 		var gender = req.params.gender
 

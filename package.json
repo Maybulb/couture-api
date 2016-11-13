@@ -24,6 +24,7 @@
     "body-parser": "~1.0.1",
     "express": "~4.0.0",
     "morgan": "~1.0.0",
-    "rand-paul": "^2.0.0"
+    "rand-paul": "^2.0.0",
+    "request": "^2.78.0"
   }
 }
