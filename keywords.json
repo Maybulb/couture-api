@@ -4,11 +4,11 @@
       "bottom": ["Brown Jeans", "Blue Jeans", "Black Jeans"]
     },
    "athleisure": {
-      "top": ["Hoodie", "T Shirt", "Dri Fit Shirt"],
+      "top": ["Hoodie", "T-Shirt", "Dri Fit Shirt"],
       "bottom": ["Jogger", "Basketball Shorts", "Yoga Pants"]
     },
    "regular": {
-      "top": ["Long Sleeve Shirt", "Zip Up", "Graphic Tee"],
+      "top": ["Long Sleeve Shirt", "Sweatshirt", "Graphic Tee"],
       "bottom": ["Denim Jeans", "Chinos", "Slacks"]
     }
 }
