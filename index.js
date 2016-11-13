@@ -41,7 +41,7 @@ router.get('/', function(req, res) {
 	res.json({ message: 'api root, baby' });
 });
 
-router.route('/:gender/:style/').get(function(req, res) {
+router.route('/:gender/:style').get(function(req, res) {
 	var gender = (function () {
 		if (req.params.gender === "other") {
 			return ""
@@ -58,7 +58,10 @@ router.route('/:gender/:style/').get(function(req, res) {
 				"bottom": " under $" + max * .6
 			}
 		} else {
-			return ""
+			return {
+				"top": "",
+				"bottom": ""
+			}
 		}
 	})();
 
