@@ -124,7 +124,7 @@ function getItem(article, gender, priceRange, title, index) {
 		MinimumPrice: parseInt(String(Math.floor(priceRange[article][0] + "00"), 10)),
 		Sort: "popularity-rank"
 	}).then(function(results) {
-		var base = rand.paul(results.slice(0, 50));
+		var base = rand.paul(results);
 		var scrapeRes = request("GET", base["DetailPageURL"][0])
 		var body = scrapeRes.getBody()
 		var page = cheerio.load(body);
