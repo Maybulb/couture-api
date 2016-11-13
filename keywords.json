@@ -1,0 +1,16 @@
+{
+  "styles": {
+    "hipster": {
+      "tops": ["Button Up Shirt","Blazer","Cardigan"],
+      "bottoms": ["Brown Jeans", "Blue Jeans", "Black Jeans"]
+    },
+   "athleisure": {
+      "tops": ["Hoodie","T Shirt","Dri Fit Shirt"],
+      "bottoms": ["Jogger","Basketball Shorts","Yoga Pants"]
+    },
+   "regular": {
+      "tops": ["Long Sleeve Shirt","Zip Up","Graphic Tee"],
+      "bottoms": ["Denim Jeans","Chinos","Slacks"]
+    }
+  }
+}
