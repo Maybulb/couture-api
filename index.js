@@ -48,7 +48,7 @@ router.get('/', function(req, res) {
 router.route('/:gender/:style/:article') // &query=boots
 	.get(function(req, res) {
 		var gender = (function () {
-			if (req.params.gender === "other") {
+			if (req.params.gender !== "male" || req.params.gender !== "female") {
 				return ""
 			} else {
 				return req.params.gender
