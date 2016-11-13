@@ -43,17 +43,19 @@ router.get('/', function(req, res) {
 
 
 router.route('/search/:query')
-
 	.get(function(req, res) {
+		var gender = 'male'
+		var search = req.params.query
+		var keyword = gender +' '+ search
 		client.itemSearch({
-			Keywords: 'male sweater',
+			Keywords: keyword,
 			responseGroup: 'ItemAttributes'
 		}, function(err, results, response) {
 			if (err) {
 				res.send(err);
 			} else {
-				res.send(results);  // products (Array of Object) 
-				res.send(response); // response (Array where the first element is an Object that contains Request, Item, etc.) 
+				res.send(results);  // products (Array of Object)
+				res.send(response); // response (Array where the first element is an Object that contains Request, Item, etc.)
 			}
 		});
 	});
