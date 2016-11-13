@@ -68,6 +68,10 @@ router.route('/:gender/:style/search') // &query=boots
 // register routes
 app.use('/api', router);
 
+app.get('*', function(req, res){
+  res.send({error: 'invalid route'}, 404);
+});
+
 // start theory
 app.listen(port, function() {
 	console.log('Magic happens on localhost:' + port);
