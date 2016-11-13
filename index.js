@@ -87,7 +87,6 @@ router.route('/:gender/:style').get(function(req, res) {
 
 	// very, very, very dirty hack. fix later
 	var checkIfDone = setInterval(function () {
-		console.log(global.done["top"] && global.done["bottom"])
 		if (global.done["top"] && global.done["bottom"]) {
 			clearInterval(checkIfDone);
 			var punctuation = /[$.]/g
@@ -114,15 +113,14 @@ app.listen(port, function() {
 
 function getItem(article, gender, priceRange, title, index) {
 	keyword = gender + " " + styles[title][article][index];
-	console.log(parseInt(String(Math.floor(priceRange[article][1] + "00"), 10)), parseInt(String(Math.floor(priceRange[article][0] + "00"), 10)))
 	client.itemSearch({
-		Condition: "New",
-		Keywords: keyword,
+		condition: "New",
+		keywords: keyword,
 		ResponseGroup: 'ItemAttributes',
 		SearchIndex: 'Fashion',
 		MaximumPrice: parseInt(String(Math.floor(priceRange[article][1] + "00"), 10)),
 		MinimumPrice: parseInt(String(Math.floor(priceRange[article][0] + "00"), 10)),
-		Sort: "popularity-rank"
+		sort: "popularity-rank"
 	}).then(function(results) {
 		var base = rand.paul(results);
 		var scrapeRes = request("GET", base["DetailPageURL"][0])
