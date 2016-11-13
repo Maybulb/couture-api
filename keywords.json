@@ -1,6 +1,5 @@
 {
-  "styles": {
-    "hipster": {
+  "hipster": {
       "tops": ["Button Up Shirt", "Blazer", "Cardigan"],
       "bottoms": ["Brown Jeans", "Blue Jeans", "Black Jeans"]
     },
@@ -12,5 +11,4 @@
       "tops": ["Long Sleeve Shirt", "Zip Up", "Graphic Tee"],
       "bottoms": ["Denim Jeans", "Chinos", "Slacks"]
     }
-  }
 }

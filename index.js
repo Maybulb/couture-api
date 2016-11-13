@@ -11,7 +11,7 @@ var client = amazon.createClient({
   awsTag: "benjp51-20"
 });
 
-var keywords = require('./keywords.json');
+var styles = require('./keywords.json');
 
 // configure app
 app.use(morgan('dev')); // log requests to the console
