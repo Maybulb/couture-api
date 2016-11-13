@@ -4,5 +4,5 @@ couture api
 the api for couture!!
 
 ```
-api/gender/style/search?store=amazon&brands=coach
+http://localhost:8080/api/male/hipster/boots&store=amazon&brands=asos
 ```
