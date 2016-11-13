@@ -97,7 +97,7 @@ router.route('/:gender/:style').get(function(req, res) {
 			// global.item["totalCost"]["pretty"] = "$" + String(parseInt(global.item["top"]["cost"]["pretty"].split(punctuation)[1], 10) + parseInt(global.item["bottom"]["cost"]["pretty"].split(punctuation)[1], 10)) + "." + String(parseInt(global.item["top"]["cost"]["pretty"].split(punctuation)[2], 10) + parseInt(global.item["top"]["cost"]["pretty"].split(punctuation)[2], 10));
 			res.send(global.item);
 		}
-	}, 50);
+	}, 200);
 });
 
 // register routes
@@ -141,14 +141,8 @@ function getItem(article, gender, priceRange, title, index) {
 
 		global.item[article]["image"] = page('img#landingImage, img.a-dynamic-image').attr("src");
 		global.item[article]["cost"] = new Object();
-
-		try {
-			global.item[article]["cost"].pretty = base["ItemAttributes"][0]["ListPrice"][0]["FormattedPrice"][0];
-			global.item[article]["cost"].raw = Number.parseInt(base["ItemAttributes"][0]["ListPrice"][0]["Amount"][0], 10);
-		} catch (e) {
-			global.item[article]["cost"].pretty = page('#priceblock_ourprice, #priceblock_saleprice').text();
-			global.item[article]["cost"].raw = Number.parseInt(global.item[article]["cost"].pretty.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ""), 10);
-		}
+		global.item[article]["cost"].pretty = page('#priceblock_ourprice, #priceblock_saleprice').text();
+		global.item[article]["cost"].raw = Number.parseInt(global.item[article]["cost"].pretty.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ""), 10);
 
 		global.done[article] = true
 	}).catch(function(err) {
