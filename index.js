@@ -68,7 +68,8 @@ router.route('/:gender/:style/:article') // article=[top/bottom]
 		
 		client.itemSearch({
 			Keywords: keyword,
-			responseGroup: 'ItemAttributes'
+			responseGroup: 'ItemAttributes',
+			searchIndex: 'Fashion'
 		}, function(err, results, response) {
 			if (err) {
 				res.send(err);
