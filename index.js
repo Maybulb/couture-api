@@ -117,10 +117,10 @@ function getItem(article, gender, priceRange, title, index) {
 	client.itemSearch({
 		condition: "New",
 		keywords: keyword,
-		ResponseGroup: 'ItemAttributes',
-		SearchIndex: 'Fashion',
-		MaximumPrice: parseInt(String(Math.floor(priceRange[article][1] + "00"), 10)),
-		MinimumPrice: parseInt(String(Math.floor(priceRange[article][0] + "00"), 10)),
+		responseGroup: 'ItemAttributes',
+		searchIndex: 'Fashion',
+		maximumPrice: parseInt(String(Math.floor(priceRange[article][1] + "00"), 10)),
+		minimumPrice: parseInt(String(Math.floor(priceRange[article][0] + "00"), 10)),
 		sort: "popularity-rank"
 	}).then(function(results) {
 		var base = rand.paul(results);
