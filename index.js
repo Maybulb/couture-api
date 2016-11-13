@@ -20,7 +20,8 @@ app.use(morgan('dev')); // log requests to the console
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var port     = process.env.PORT || 8080; // set our port
+// port!!
+var port = process.env.PORT || 8080;
 
 // api routes
 
@@ -35,7 +36,6 @@ router.use(function(req, res, next) {
 
 
 
-
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {
 	res.json({ message: 'api root, baby' });
@@ -45,7 +45,17 @@ router.get('/', function(req, res) {
 router.route('/search/:query')
 
 	.get(function(req, res) {
-		res.send(req.params.query);
+		client.itemSearch({
+			Keywords: 'male sweater',
+			responseGroup: 'ItemAttributes'
+		}, function(err, results, response) {
+			if (err) {
+				res.send(err);
+			} else {
+				res.send(results);  // products (Array of Object) 
+				res.send(response); // response (Array where the first element is an Object that contains Request, Item, etc.) 
+			}
+		});
 	});
 
 // register routes
