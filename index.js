@@ -67,7 +67,24 @@ router.route('/:gender/:style/:article') // &query=boots
 			if (err) {
 				res.send(err);
 			} else {
-				res.send(results);
+				const base = results[0];
+				var item = {
+					"url": base["DetailPageURL"][0],
+					"brand": base["ItemAttributes"][0]["Brand"][0],
+					"color": base["ItemAttributes"][0]["Color"][0],
+					"department": base["ItemAttributes"][0]["Department"][0],
+					"note": base["ItemAttributes"][0]["Feature"], // amazon's writeup of the product
+					"cost": {
+						"formatted": base["ItemAttributes"][0]["ListPrice"][0]["FormattedPrice"][0] + " " + base["ItemAttributes"][0]["ListPrice"][0]["CurrencyCode"][0],
+						"raw": {
+							"amount": base["ItemAttributes"][0]["ListPrice"][0]["Amount"][0],
+							"currency": base["ItemAttributes"][0]["ListPrice"][0]["CurrencyCode"][0]
+						}
+					},
+					"group": base["ItemAttributes"][0]["ProductGroup"][0],
+					"title": base["ItemAttributes"][0]["Title"][0]
+				}
+				res.send(item);
 			}
 		});
 	});
