@@ -75,10 +75,8 @@ router.route('/:gender/:style').get(function(req, res) {
 		res.redirect('/404')
 	}
 
-	var title = req.params.style
-		, min = 0
-		, max = 3
-		, index = Math.floor(Math.random() * (max - min)) + min
+	var title = req.params.style,
+	  	index = Math.floor(Math.random() * (max - min)) + min
 
 	global.item = new Object();
 	global.done = new Object();
@@ -112,7 +110,8 @@ app.listen(port, function() {
 });
 
 function getItem(article, gender, priceRange, title, index) {
-	keyword = gender + " " + styles[title][article][index];
+	var keyword = gender + " " + styles[title][article][index];
+	console.log(keyword)
 	client.itemSearch({
 		condition: "New",
 		keywords: keyword,
