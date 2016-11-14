@@ -4,5 +4,13 @@ couture api
 the api for couture!!
 
 ```
-http://localhost:8080/api/gender/style/[top,bottom]
+/api/gender/style
 ```
+
+```
+/api/[male,female,other]/[regular,hipster,athleisure]
+```
+
+example
+
+https://couture-api.herokuapp.com/api/male/hipster
